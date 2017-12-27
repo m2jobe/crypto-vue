@@ -29,4 +29,5 @@ new Vue({
     store.getCryptoCurrencies()
     store.getTotalMarketCapUSD()
   }
+
 })

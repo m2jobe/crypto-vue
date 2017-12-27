@@ -2,7 +2,7 @@
   <div>
     <div class="columns" style="margin: 0px 10px">
       <div v-for="cryptoCurrency in firstFiveCryptoCurrencies" class="column">
-        <router-link :to="`/${cryptoCurrency.id}`">
+        <router-link :to="`/currency/${cryptoCurrency.id}`">
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
               <figure class="image is-4by3">
@@ -11,8 +11,8 @@
             </div>
             <div class="card-content">
               <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.name }}</p>
-              <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }} 
-                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}% 
+              <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
+                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
                   <icon class="arrow-down" name="arrow-down" height="9" width="9"></icon>
                 </span>
@@ -24,7 +24,7 @@
     </div>
     <div class="columns" style="margin: 0px 10px">
       <div v-for="cryptoCurrency in secondFiveCryptoCurrencies" class="column">
-        <router-link :to="`/${cryptoCurrency.id}`">
+        <router-link :to="`/currency/${cryptoCurrency.id}`">
           <div class="card">
             <div class="card-image" :class="{'card-image-iframe': isOpenedInIFrame}">
               <figure class="image is-4by3">
@@ -33,8 +33,8 @@
             </div>
             <div class="card-content">
               <p class="title is-5" :class="{'title-iframe': isOpenedInIFrame}">{{ cryptoCurrency.name }}</p>
-              <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}  
-                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}% 
+              <p class="title price-title is-5" :class="{'price-title-iframe': isOpenedInIFrame}">${{ getPriceUSD(cryptoCurrency) }}
+                <span :class="{'positive-percent-change': cryptoCurrency.positivePercentChange, 'negative-percent-change': !cryptoCurrency.positivePercentChange}"> {{ getPercentChange(cryptoCurrency) }}%
                   <icon class="arrow-up" name="arrow-up" height="9" width="9"></icon>
                   <icon class="arrow-down" name="arrow-down" height="9" width="9"></icon>
                 </span>
@@ -183,26 +183,26 @@ $large: 1024px;
 }
 
 @-webkit-keyframes spinner {
-    from 
-    { 
-        -webkit-transform: rotateY(0deg); 
-    } 
-    to { 
-        -webkit-transform: rotateY(-360deg); 
-    } 
+    from
+    {
+        -webkit-transform: rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateY(-360deg);
+    }
 }
-@keyframes spinner { 
-    from { 
-        -moz-transform: rotateY(0deg); 
-        -ms-transform: rotateY(0deg); 
-        transform: rotateY(0deg); 
-    } 
-    to 
-    { 
-        -moz-transform: rotateY(-360deg); 
-        -ms-transform: rotateY(-360deg); 
-        transform: rotateY(-360deg); 
-    
-    } 
+@keyframes spinner {
+    from {
+        -moz-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+    to
+    {
+        -moz-transform: rotateY(-360deg);
+        -ms-transform: rotateY(-360deg);
+        transform: rotateY(-360deg);
+
+    }
 }
 </style>

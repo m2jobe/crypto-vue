@@ -4,15 +4,23 @@
       <div class="container">
         <div class="nav-left">
           <router-link to="/" class="nav-item" :class="{'hide': isOpenedInIFrame}">
-            <img src="/static/app-logo.png" class="app-logo" /> <p class="app-logo-name">Crypto<span>Vue</span></p>
+            <img src="https://github.com/roslinpl/bitcoin.it-promotional_graphics/blob/master/bitcoinLogo1000.png?raw=true" class="app-logo" /> <p class="app-logo-name">Crypto<span>Affiliate</span></p>
           </router-link>
         </div>
         <div class="nav-right nav-menu">
           <span class="nav-item">
             <img src="/static/app-logo.png" class="iframe-app-logo" :class="{'show': isOpenedInIFrame}"/>
-            <a class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" @click="toggleModal">
-              <span>What's this?</span>
+            <router-link :to="`/news`"> <a style="margin-right:1vh" class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" >
+              <span>Crypto News</span>
+            </a> </router-link>
+
+            <a style="margin-right:1vh" class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" @click="goToIco" >
+              <span>ICO's</span>
             </a>
+
+            <!--<a class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" @click="toggleModal">
+              <span>What's this?</span>
+            </a>-->
           </span>
         </div>
       </div>
@@ -23,7 +31,7 @@
           <header class="modal-card-head"></header>
           <section class="modal-card-body">
             <div class="content">
-              <h3> CryptoVue </h3>
+              <h3> CryptoAffiliates </h3>
               <img src="/static/app-logo.png" class="modal-body-logo" id="app-logo"/>
               <p>Cryptocurrencies emerged in 2009 with the first decentralized cryptocurrency - <a href="https://bitcoin.org/en/" target="_blank">Bitcoin</a>. As of today - more than 700 digital currencies exist with a total market capitalization greater than 100 billion USD. </p>
               <p><a target="_blank">CryptoVue</a> is a real-time dashboard that displays the top 10 cryptocurrencies based on currency price, market capitalization and overall circulating supply - obtained from the leading cryptocurrency resource <a href="https://coinmarketcap.com/" target="_blank">CoinMarketCap</a>.</p>
@@ -88,6 +96,9 @@ export default {
     },
     displayETH () {
       this.showETHWallet = true
+    },
+    goToIco () {
+      location.replace('/icos')
     }
   }
 }
