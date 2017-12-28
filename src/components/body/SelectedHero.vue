@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div class="columns selected-section" :class="{'no-padding': isOpenedInIFrame}">
       <router-link to="/" class="nav-item">
         <div class="return-action" :class="{'return-action-iframe': isOpenedInIFrame}">
@@ -50,7 +51,7 @@
               </select>
             </div>
           </div>
-          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedFiatCurrency }} {{ selectedCryptoCurrency.selectedPrice }} 
+          <p class="price-amount" :class="{'price-amount-iframe': isOpenedInIFrame}">{{ selectedFiatCurrency }} {{ selectedCryptoCurrency.selectedPrice }}
             <span :class="{'positive-percent-change': selectedCryptoCurrency.positivePercentChange, 'negative-percent-change': !selectedCryptoCurrency.positivePercentChange}">
               ({{ selectedCryptoCurrency.percentChange24h }}%)
               <sub>
@@ -72,15 +73,15 @@
               <div class="doughnut-chart doughnut-tooltip tooltip" :class="{'hide': isOpenedInIFrame || !sharedState.totalMarketCapUSD}">
                 <doughnut-chart
                   :data="{
-                    labels:['Total Market Cap USD', `Selected Crypto Currency Market Cap`], 
+                    labels:['Total Market Cap USD', `Selected Crypto Currency Market Cap`],
                     datasets:[
                       { data: [globalMarketCapUSD, selectedCryptoCurrencyMarketCap],
                         backgroundColor: [
                           '#370628',
                           '#fd6721'
                         ]
-                      }]}" 
-                  :width="125" 
+                      }]}"
+                  :width="125"
                   :height="50">
                 </doughnut-chart>
                 <span class="tooltiptext">{{ percentageOfMarketCap }}</span>
@@ -90,10 +91,36 @@
         </div>
       </div>
     </div>
+    <div style="padding: 7vh" class="columns selected-section" >
+
+      <table  class="table">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Exchange</th>
+            <th scope="col">Volume 24 Hour</th>
+            <th scope="col">From Symbol</th>
+            <th scope="col">To Symbol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(exchanges, key) in exchangeRanking">
+            <th scope="row">{{key+1}}</th>
+            <td>{{exchanges.exchange}}</td>
+            <td>{{exchanges.volume24h}}</td>
+            <td>{{exchanges.fromSymbol}}</td>
+            <td>{{exchanges.toSymbol}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
 </template>
 
 <script>
 import { store } from '../../store.js'
+global.fetch = require('node-fetch')
+const cc = require('cryptocompare')
 
 const fiatCurrencies = [ 'AUD', 'BRL', 'CAD', 'CHF', 'CNY', 'EUR', 'GBP', 'HKD', 'IDR', 'INR', 'JPY', 'USD', 'KRW', 'MXN', 'RUB' ]
 const cryptoCurrencyData = require('../../cryptocurrency-data.json')
@@ -109,7 +136,8 @@ export default {
       positivePercentChange: true,
       negativePercentChange: false,
       dropDownOpen: false,
-      isOpenedInIFrame: false
+      isOpenedInIFrame: false,
+      exchangeRanking: []
     }
   },
   created () {
@@ -142,19 +170,28 @@ export default {
     },
     selectCryptoCurrency () {
       let cryptoCurrency
+      let symbol
       if (this.sharedState.cryptoCurrencies.length === 0 || !this.sharedState.cryptoCurrencies) {
         this.axios.get(`https://api.coinmarketcap.com/v1/ticker/${this.$route.params.id}/`)
           .then(response => {
             cryptoCurrency = response.data[0]
             cryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
             this.selectedCryptoCurrency = this.addImageAndDescription(cryptoCurrency)
+            symbol = cryptoCurrency.symbol
           })
       } else {
         cryptoCurrency = this.sharedState.cryptoCurrencies.filter((obj) => {
           return obj.id === this.$route.params.id
         })[0]
+        symbol = cryptoCurrency.symbol
         this.selectedCryptoCurrency = this.manipulateCryptoCurrency(cryptoCurrency)
       }
+      cc.topExchanges(symbol, 'USD', 10)
+      .then(exchanges => {
+        console.log(exchanges)
+        this.exchangeRanking = exchanges
+      })
+      .catch(console.error)
     },
     selectFiatCurrency (fiatCurrencyEvent) {
       this.selectedFiatCurrency = fiatCurrencyEvent.target ? fiatCurrencyEvent.target.value : fiatCurrencyEvent
@@ -195,7 +232,7 @@ $large: 1024px;
 .selected-section {
   position: relative;
   align-items: center;
-  
+
   @media screen and (max-width: $medium) {
     padding-top: 30px;
   }
@@ -234,17 +271,17 @@ $large: 1024px;
     .cryptoCurrency-image {
       height: 200px;
 
-      -webkit-animation-name: spinner; 
-      -webkit-animation-timing-function: linear; 
-      -webkit-animation-iteration-count: infinite; 
-      -webkit-animation-duration: 60s; 
-      animation-name: spinner; 
-      animation-timing-function: linear; 
-      animation-iteration-count: 1; 
-      animation-duration: 60s; 
-      -webkit-transform-style: preserve-3d; 
-      -moz-transform-style: preserve-3d; 
-      -ms-transform-style: preserve-3d; 
+      -webkit-animation-name: spinner;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-duration: 60s;
+      animation-name: spinner;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+      animation-duration: 60s;
+      -webkit-transform-style: preserve-3d;
+      -moz-transform-style: preserve-3d;
+      -ms-transform-style: preserve-3d;
       transform-style: preserve-3d;
     }
 
@@ -494,7 +531,7 @@ $large: 1024px;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    
+
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
@@ -531,27 +568,27 @@ $large: 1024px;
 }
 
 @-webkit-keyframes spinner {
-    from 
-    { 
-        -webkit-transform: rotateY(0deg); 
-    } 
-    to { 
-        -webkit-transform: rotateY(-360deg); 
-    } 
+    from
+    {
+        -webkit-transform: rotateY(0deg);
+    }
+    to {
+        -webkit-transform: rotateY(-360deg);
+    }
 }
-@keyframes spinner { 
-    from { 
-        -moz-transform: rotateY(0deg); 
-        -ms-transform: rotateY(0deg); 
-        transform: rotateY(0deg); 
-    } 
-    to 
-    { 
-        -moz-transform: rotateY(-360deg); 
-        -ms-transform: rotateY(-360deg); 
-        transform: rotateY(-360deg); 
-    
-    } 
+@keyframes spinner {
+    from {
+        -moz-transform: rotateY(0deg);
+        -ms-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+    to
+    {
+        -moz-transform: rotateY(-360deg);
+        -ms-transform: rotateY(-360deg);
+        transform: rotateY(-360deg);
+
+    }
 }
 
 ::-webkit-scrollbar {

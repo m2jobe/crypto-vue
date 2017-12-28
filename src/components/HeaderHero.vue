@@ -10,6 +10,10 @@
         <div class="nav-right nav-menu">
           <span class="nav-item">
             <img src="/static/app-logo.png" class="iframe-app-logo" :class="{'show': isOpenedInIFrame}"/>
+            <router-link :to="`/exchanges`"> <a style="margin-right:1vh" class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" >
+              <span>Exchanges</span>
+            </a> </router-link>
+
             <router-link :to="`/news`"> <a style="margin-right:1vh" class="button is-success is-inverted is-outlined" :class="{'hide': isOpenedInIFrame}" >
               <span>Crypto News</span>
             </a> </router-link>

@@ -39,9 +39,9 @@ html, body {
 }
 
 .is-success {
-  background: #333;
-  background: -webkit-linear-gradient(left top, #024, #402);
-  background: -moz-linear-gradient(bottom right, #024, #402);
-  background: linear-gradient(to bottom right, #024, #402);
+  background: #c2e59c;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #64b3f4, #c2e59c);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #64b3f4, #c2e59c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 </style>

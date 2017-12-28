@@ -5,6 +5,8 @@ import BodyHero from './components/body/BodyHero.vue'
 import SelectedHero from './components/body/SelectedHero.vue'
 import NewsHero from './components/body/NewsHero.vue'
 import IcoHero from './components/body/IcoHero.vue'
+import ExchangesHero from './components/body/ExchangesHero.vue'
+import Exchange from './components/body/Exchange.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,14 @@ export default new VueRouter({
     {
       path: '/icos/',
       component: IcoHero
+    },
+    {
+      path: '/exchanges/',
+      component: ExchangesHero
+    },
+    {
+      path: '/exchange/:id',
+      component: Exchange
     }
   ],
   scrollBehavior (to, from, savedPosition) {

@@ -8,7 +8,6 @@ import Icon from 'vue-awesome/components/Icon'
 import DoughnutChart from './components/body/sub/DoughnutChart'
 import App from './App'
 import router from './routes.js'
-
 import {store} from './store.js'
 
 Vue.use(VueAxios, axios)

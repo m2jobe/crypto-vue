@@ -10,7 +10,7 @@
     </body>
 
     <script type="text/javascript">
-        var socket = io.connect('https://coincap.io');
+        var socket = io.connect('http://coincap.io/coins');
         socket.on('trades', function (tradeMsg) {
             console.log(tradeMsg);
             document.getElementById('trade').innerHTML = JSON.stringify(tradeMsg)
