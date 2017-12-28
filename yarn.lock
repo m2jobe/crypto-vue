@@ -5904,6 +5904,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-adsense@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/vue-adsense/-/vue-adsense-1.0.1.tgz#6626772627071f9d7449b2558547a34ceca42c1f"
+
 vue-awesome@^2.3.1:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-awesome/-/vue-awesome-2.3.4.tgz#a8b06a21dd95a5787e108561be89e216fd9a78e6"

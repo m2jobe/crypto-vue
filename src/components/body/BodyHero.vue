@@ -44,6 +44,8 @@
         </router-link>
       </div>
     </div>
+
+
   </div>
 </template>
 
@@ -63,6 +65,8 @@ export default {
     if (window.self !== window.top) {
       this.isOpenedInIFrame = true
     }
+  },
+  components: {
   },
   computed: {
     firstFiveCryptoCurrencies () {
