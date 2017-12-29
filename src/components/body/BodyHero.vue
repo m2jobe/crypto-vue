@@ -44,7 +44,6 @@
         </router-link>
       </div>
     </div>
-    <br/>
     <div class="columns" style="margin: 0px 10px; width:100vw;height:200px">
     <ins class="adsbygoogle"
          style="display:block;width:100%;height:100%"
@@ -73,7 +72,7 @@ export default {
     }
   },
   mounted () {
-    (window.adsbygoogle = window.adsbygoogle || []).push({})
+    setTimeout(function () { (window.adsbygoogle = window.adsbygoogle || []).push({}) }, 2000)
   },
   components: {
   },
