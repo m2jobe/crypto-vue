@@ -1,17 +1,22 @@
 <template>
-  <div class="row">
+  <div>
     <router-link to="/" class="nav-item" style="margin-top: 4vh; margin-bottom:3vh; ">
       <div class="return-action" :class="{'return-action-iframe': isOpenedInIFrame}">
         <icon name="chevron-left" class="arrow-left" :class="{'arrow-left-iframe': isOpenedInIFrame}" height="22" width="22"></icon>
         <p class="return-text" :class="{'hide': isOpenedInIFrame}">Return</p>
       </div>
     </router-link>
-    <div class="col-md-4">
-      <iframe style="border: none;"" src="//btcmanager.com/widgetsphp/large1.php" width="280" height="340"></iframe>
-    </div>
+    <div class="row">
+      <div class="col-md-7 pull-left">
+        <iframe style="border: none;"" src="//btcmanager.com/widgetsphp/large1.php" width="280" height="340"></iframe>
+        <iframe id="youriframe" width="640" height="360" ></iframe>
+        <br/><br/><br/>
+        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcointelegraph%2F&tabs=timeline&width=500&height=740&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="500" height="740" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+      </div>
 
-    <div style="display:block; margin:auto; width: 50%; margin-top:3vh" class="col-md-8 selected-section" :class="{'no-padding': isOpenedInIFrame}">
-      <a class="twitter-timeline" data-height="1500" data-weight="600" href="https://twitter.com/CryptoCurrent?ref_src=twsrc%5Etfw">Tweets by CryptoCurrent</a>
+      <div style="display:inline-flex; margin:auto; padding-right:3vw" class="col-md-5 selected-section" :class="{'no-padding': isOpenedInIFrame}">
+        <a class="twitter-timeline" data-height="1500" data-weight="600" href="https://twitter.com/CryptoCurrent?ref_src=twsrc%5Etfw"></a>
+      </div>
     </div>
   </div>
 </template>
@@ -41,6 +46,7 @@ export default {
     let ckeditor = document.createElement('script')
     ckeditor.setAttribute('src', 'https://platform.twitter.com/widgets.js')
     document.head.appendChild(ckeditor)
+    setTimeout(function () { this.go_get() }, 2000)
   },
   watch: {
     $route () {

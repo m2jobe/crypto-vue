@@ -4,176 +4,107 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="/static/manifest.json">
-    <script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"></script>
-    <script>
-    /*
-    	A JavaScript plugin for lazy-loading responsive Google Adsense ads.
-    	-
-    	By Osvaldas Valutis, www.osvaldas.info
-    	Available for use under the MIT License
-    */
 
-    ;( function( $, window, document, undefined )
-    {
-    	'use strict';
-
-    	var $win			= $( window ),
-    		throttle		= function(a,b){var c,d;return function(){var e=this,f=arguments,g=+new Date;c&&g<c+a?(clearTimeout(d),d=setTimeout(function(){c=g,b.apply(e,f)},a)):(c=g,b.apply(e,f))}},
-
-    		scriptUrl		= '//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
-    		scriptLoaded	= false,
-    		throttleTO		= 250,
-
-    		$adsLoaded		= $([]),
-    		$adsToLoad		= $([]),
-    		$adsPending		= $([]),
-
-    		loadAd			= function( $ad )
-    		{
-    			( adsbygoogle = window.adsbygoogle || []).push({});
-
-    			var onLoadFn = $ad.data( 'alOptions' ).onLoad;
-    			if( typeof onLoadFn === 'function' )
-    			{
-    				$ad.find( 'iframe' ).one( 'load', function()
-    				{
-    					onLoadFn( $ad );
-    				});
-    			}
-    		},
-    		getAdWidth = function( ad )
-    		{
-    			return parseInt( window.getComputedStyle( ad, ':before' ).getPropertyValue( 'content' ).slice( 1, -1 ) || 9999 );
-    		},
-    		initAds = function()
-    		{
-    			if( !$adsToLoad.length ) return true;
-
-    			var winScroll = $win.scrollTop(),
-    				winHeight = $win.height();
-
-    			$adsToLoad.each( function()
-    			{
-    				var $this		= $( this ),
-    					thisOpts	= $this.data( 'alOptions' ),
-    					laziness	= thisOpts.laziness + 1,
-    					offset		= $this.offset().top;
-
-    				// if the element is too far below || too far above
-    				if( offset - winScroll > winHeight * laziness || winScroll - offset - $this.outerHeight() - ( winHeight * laziness ) > 0 )
-    					return true;
-
-    				$adsToLoad	= $adsToLoad.not( $this );
-    				$adsLoaded	= $adsLoaded.add( $this );
-
-    				$this
-    				.data( 'alOriginalHTML', $this.html())
-    				.data( 'alWidth', getAdWidth( this ))
-    				.children( ':first' )
-    				.addClass( 'adsbygoogle' );
-
-    				if( typeof adsbygoogle !== 'undefined' ) loadAd( $this );
-    				else $adsPending = $adsPending.add( $this );
-
-    				if( !scriptLoaded )
-    				{
-    					scriptLoaded = true;
-    					$.ajax(
-    					{
-    						url:		scriptUrl,
-    						async:		true,
-    						cache:		true,
-    						dataType:	'script',
-    						success:	function()
-    						{
-    							$adsPending.each( function()
-    							{
-    								loadAd( $( this ));
-    							});
-    							$adsPending = $([]);
-    						}
-    					});
-    				}
-    			});
-    		},
-    		resizeAds = function()
-    		{
-    			if( !$adsLoaded.length ) return true;
-
-    			var anyNew = false;
-    			$adsLoaded.each( function()
-    			{
-    				var $this = $( this );
-    				if( $this.data( 'alWidth' ) != getAdWidth( this ))
-    				{
-    					$adsLoaded = $adsLoaded.not( $this );
-    					$this.html(  $this.data( 'alOriginalHTML' ));
-    					$adsToLoad	= $adsToLoad.add( $this );
-    					anyNew		= true;
-    				}
-    			});
-    			if( anyNew ) initAds();
-    		};
-
-    	$win
-    	.on( 'scroll resize', throttle( throttleTO, initAds ))
-    	.on( 'resize', throttle( throttleTO, resizeAds ));
-
-    	$.fn.adsenseLoader = function( options )
-    	{
-    		if( typeof options !== 'string' )
-    		{
-    			options = $.extend({},
-    			{
-    				laziness:	1,
-    				onLoad:		false
-    			},
-    			options );
-    		}
-
-    		this.each( function()
-    		{
-    			var $this = $( this );
-
-    			if( options === 'destroy' )
-    			{
-    				$this.html( $this.data( 'alOriginalHTML' ));
-    				$adsToLoad	= $adsToLoad.not( $this );
-    				$adsLoaded	= $adsLoaded.not( $this );
-    				$adsPending	= $adsPending.not( $this );
-    			}
-    			else
-    			{
-    				$this.data( 'alOptions', options );
-    				$adsToLoad = $adsToLoad.add( $this );
-    			}
-    		});
-
-    		if( options !== 'destroy' )
-    			initAds();
-
-    		return this;
-    	};
-
-    	$.adsenseLoaderConfig = function( options )
-    	{
-    		if( typeof options.scriptUrl !== 'undefined' )
-    			scriptUrl = options.scriptUrl;
-
-    		if( typeof options.throttle !== 'undefined' )
-    			throttleTO = options.throttle;
-    	};
-
-    })( jQuery, window, document );
-    </script>
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="The Top Ten CryptoCurrencies | CryptoVue">
     <meta itemprop="description" content="A real-time dashboard that displays the top ten cryptocurrencies based on currency price, market captilization and overall circulating supply.">
     <meta itemprop="image" content="https://www.cryptovue.com/static/meta_landing_screen.png">
+    <style>
+    body {
+    	font-family: Roboto, sans-serif;
+    	color: #212121;
+    	background-color: #f5f5f5;
+    	padding: 2.5rem 1.25rem; /* 40 20 */
+    }
+    a {
+      text-decoration: none;
+      color: currentColor;
+    }
 
+    .container {
+    	width: 100%;
+    	max-width: 64em; /* 1024 */
+    	text-align: center;
+    	margin: 0 auto;
+    }
+      .container h1 {
+        font-size: 1.625em; /* 36 */
+        font-weight: 300;
+        color: #1268bd;
+      }
+      .container a { font-weight: 700; }
+      .container h1 a:hover,
+      .container h1 a:focus { color: #f4b42b; }
+
+      .container p { line-height: 1.6; }
+      .container p span { color: #777; }
+
+    .row + .row {
+    	border-top: 1px solid #e1e1e1;
+    	padding-top: 2.5em; /* 40 */
+    	margin-top: 2.5em; /* 40 */
+    }
+    .gap {
+    	height: 125em; /* 2000 */
+    }
+
+
+    /* AD STYLING */
+
+    .adsense {
+    	width: 970px;
+    	height: 90px;
+    	background-color: #fff;
+    	display: block;
+    	margin: 0 auto;
+    }
+    .adsense:before { display: none !important; }
+    .adsense ins	{ width: 100%; height: 100%; display: block; }
+
+    .adsense {
+    	position: relative;
+    }
+    	.adsense__loading {
+    		width: 100%;
+    		height: 100%;
+    		background-color: rgba( 255, 255, 255, .9 );
+    		display: table;
+    		position: absolute;
+    		top: 0;
+    		left: 0;
+    	}
+    	.adsense--loaded .adsense__loading { display: none; }
+
+    		.adsense__loading span {
+    			text-align: center;
+    			vertical-align: middle;
+    			display: table-cell;
+    		}
+
+    @media screen and ( max-width: 64em ) /* <= 1024 */
+    {
+    	.adsense { width: 728px; height: 90px; }
+    	.adsense:before	{ content: '1024'; }
+    }
+
+    @media screen and ( max-width: 50em ) /* <= 800 */
+    {
+    	.adsense { width: 468px; height: 60px; }
+    	.adsense:before	{ content: '800'; }
+    }
+
+    @media screen and ( max-width: 33.75em ) /* <= 540 */
+    {
+    	.adsense { width: 336px; height: 280px; }
+    	.adsense:before	{ content: '540'; }
+    }
+
+    @media screen and ( max-width: 26.25em ) /* <= 420 */
+    {
+    	.adsense { width: 250px; height: 250px; }
+    	.adsense:before	{ content: '420'; }
+    }
+    </style>
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@djirdehh">
@@ -196,6 +127,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,400,700" rel="stylesheet">
 
     <!-- Favicons -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="apple-touch-icon" sizes="180x180" href="/static/img/icons/apple-touch-icon.png">
     <link rel="shortcut icon" href="http://d1ujqdpfgkvqfi.cloudfront.net/favicon-generator/htdocs/favicons/2014-11-30/10ef4f0ab17f09ae2073866695eae3f7.ico" type="image/x-icon">
     <link rel="icon" href="http://d1ujqdpfgkvqfi.cloudfront.net/favicon-generator/htdocs/favicons/2014-11-30/10ef4f0ab17f09ae2073866695eae3f7.ico" type="image/x-icon">
@@ -233,20 +165,34 @@
           });
         });
       }
+      function go_get(){
+       var base_url = 'http://www.youtube.com/embed?listType=search&list=Cryptocurrency+latest+news'
+       var target_url = base_url ;
+       console.log(target_url)
+       var ifr = document.getElementById('youriframe');
+       ifr.src = target_url;
+       setTimeout(function () { document.querySelector('.ytp-playlist-menu-button').click() }, 2000)
+       return false;
+      }
     </script>
   </head>
   <body>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
     <div class="row">
-        <div class="adsense">
-            <ins data-ad-client="ca-pub-4676533344420647" data-ad-slot="5741144487"></ins>
-            <p class="adsense__loading"><span>Loading&hellip;</span></p>
-        </div>
-    </div>
-  </body>
-  <script>
-  $('.adsense').adsenseLoader();
+  		<div class="adsense">
+  			<ins data-ad-client="ca-pub-4676533344420647" data-ad-slot="5741144487"></ins>
+  			<p class="adsense__loading"><span>Loading&hellip;</span></p>
+  		</div>
+  	</div>
 
-  </script>
+
+
+
+</script>
+
+
+    <!-- built files will be auto injected -->
+  </body>
+
+
 </html>

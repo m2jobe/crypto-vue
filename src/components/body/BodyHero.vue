@@ -44,13 +44,19 @@
         </router-link>
       </div>
     </div>
-
-
+    <div class="columns" style="margin: 0px 10px">
+      <adsense
+        ad-client="ca-pub-4676533344420647"
+        ad-slot="5741144487"
+        ad-format="auto"
+      </adsense>
+    </div>
   </div>
 </template>
 
 <script>
 import { store } from '../../store.js'
+import VueAdsense from '../vue-adsense/VueAdsense.vue'
 
 export default {
   props: {},
@@ -67,6 +73,7 @@ export default {
     }
   },
   components: {
+    'adsense': VueAdsense
   },
   computed: {
     firstFiveCryptoCurrencies () {
