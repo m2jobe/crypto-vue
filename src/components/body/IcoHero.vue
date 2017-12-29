@@ -1,15 +1,24 @@
 <template>
-  <div class="row">
-    <router-link to="/" class="nav-item" style="margin-top:5vh">
+  <div style="margin-top: 7vh">
+    <router-link to="/" class="nav-item" style="text-align:center">
       <div class="return-action" :class="{'return-action-iframe': isOpenedInIFrame}">
         <icon name="chevron-left" class="arrow-left" :class="{'arrow-left-iframe': isOpenedInIFrame}" height="22" width="22"></icon>
         <p class="return-text" :class="{'hide': isOpenedInIFrame}">Return</p>
       </div>
     </router-link>
+    <div class="row" style="padding:40px">
+      <div style="display:block; margin:auto; width: 90%; margin-top:2vh" class="col-md-12 selected-section" :class="{'no-padding': isOpenedInIFrame}">
+        <div class='icowatchlist_list_widget' data-color='00B97A' data-num='6' data-type='regular'></div>
 
-    <div style="display:block; margin:auto; width: 90%; margin-top:2vh" class="col-md-12 selected-section" :class="{'no-padding': isOpenedInIFrame}">
-      <div class='icowatchlist_list_widget' data-color='00B97A' data-num='6' data-type='regular'></div>
-
+      </div>
+    </div>
+    <br/>
+    <div class="columns" style="margin: 0px 10px; width:100vw;height:200px">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%;height:100%"
+         data-ad-client="ca-pub-4676533344420647"
+         data-ad-slot="5741144487"
+         data-ad-format="auto"></ins>
     </div>
   </div>
 </template>
@@ -39,6 +48,9 @@ export default {
     let ckeditor = document.createElement('script')
     ckeditor.setAttribute('src', 'https://api.icowatchlist.com/widget/v1/build.js')
     document.head.appendChild(ckeditor)
+  },
+  mounted () {
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
   },
   watch: {
     $route () {

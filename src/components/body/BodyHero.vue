@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-top: 12vh">
     <div class="columns" style="margin: 0px 10px">
       <div v-for="cryptoCurrency in firstFiveCryptoCurrencies" class="column">
         <router-link :to="`/currency/${cryptoCurrency.id}`">
@@ -44,19 +44,19 @@
         </router-link>
       </div>
     </div>
-    <div class="columns" style="margin: 0px 10px">
-      <adsense
-        ad-client="ca-pub-4676533344420647"
-        ad-slot="5741144487"
-        ad-format="auto"
-      </adsense>
+    <br/>
+    <div class="columns" style="margin: 0px 10px; width:100vw;height:200px">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%;height:100%"
+         data-ad-client="ca-pub-4676533344420647"
+         data-ad-slot="5741144487"
+         data-ad-format="auto"></ins>
     </div>
   </div>
 </template>
 
 <script>
 import { store } from '../../store.js'
-import VueAdsense from '../vue-adsense/VueAdsense.vue'
 
 export default {
   props: {},
@@ -72,8 +72,10 @@ export default {
       this.isOpenedInIFrame = true
     }
   },
+  mounted () {
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
+  },
   components: {
-    'adsense': VueAdsense
   },
   computed: {
     firstFiveCryptoCurrencies () {

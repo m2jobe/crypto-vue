@@ -1,4 +1,5 @@
 <template>
+  <div style="margin-top: 12vh">
     <div class="columns selected-section" :class="{'no-padding': isOpenedInIFrame}">
       <router-link to="/exchanges" class="nav-item">
         <div class="return-action" :class="{'return-action-iframe': isOpenedInIFrame}">
@@ -24,6 +25,15 @@
         <vue-disqus  shortname="cryptoaffiliate" :identifier="`id-${selectedCryptoCurrency.id}`"   v-bind:url="'http://localhost:8080/exchange'+selectedCryptoCurrency.id" ></vue-disqus>
       </div>
     </div>
+    <br/>
+    <div class="columns" style="margin: 0px 10px; width:100vw;height:200px">
+    <ins class="adsbygoogle"
+         style="display:block;width:100%;height:100%"
+         data-ad-client="ca-pub-4676533344420647"
+         data-ad-slot="5741144487"
+         data-ad-format="auto"></ins>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -58,6 +68,9 @@ export default {
     if (window.self !== window.top) {
       this.isOpenedInIFrame = true
     }
+  },
+  mounted () {
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
   },
   components: {
     VueDisqus
