@@ -12,14 +12,10 @@
 
       </div>
     </div>
-    <br/>
-    <div class="columns" style="margin: 0px 10px; width:100vw;height:200px">
     <ins class="adsbygoogle"
-         style="display:block;width:100%;height:100%"
+         style="display:inline-block;width:728px;height:90px"
          data-ad-client="ca-pub-4676533344420647"
-         data-ad-slot="5741144487"
-         data-ad-format="auto"></ins>
-    </div>
+         data-ad-slot="5741144487"></ins>
   </div>
 </template>
 
